@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="theme-color" content="#0a0a12" />
+<title>IKEBUKURO STORIES — 池袋ストリート</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<!-- タイトル画面 -->
+<div id="titleScreen" class="overlay">
+  <div class="title-bg"></div>
+  <div class="title-inner">
+    <div class="title-kicker">TOKYO / 豊島区</div>
+    <h1 class="title-logo">IKEBUKURO<span>STORIES</span></h1>
+    <p class="title-sub">池袋ストリート — オープンワールド</p>
+    <button id="startBtn" class="big-btn">▶ ゲーム開始</button>
+    <div class="title-hint">
+      iPhoneは横向き推奨 / 画面をタップしてフルスクリーン<br />
+      左スティックで移動・右ボタンでアクション
+    </div>
+    <ul class="feature-list">
+      <li>🏙 実在の池袋（サンシャイン60・西口公園・乙女ロード）</li>
+      <li>🚗 車を奪って街を疾走 / 🚓 警察の手配度システム</li>
+      <li>🌗 昼夜サイクル & ネオン / 👥 行き交う群衆と交通</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ゲーム本体 -->
+<canvas id="game"></canvas>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="topbar">
+    <div id="clock">07:30</div>
+    <div id="wanted"></div>
+    <div id="cash">¥ 0</div>
+  </div>
+  <canvas id="minimap" width="150" height="150"></canvas>
+  <div id="health-wrap"><div id="health-bar"></div></div>
+  <div id="locationName">池袋駅 西口</div>
+  <div id="missionBox" class="hidden"></div>
+</div>
+
+<!-- タッチコントロール -->
+<div id="controls" class="hidden">
+  <div id="stick-zone">
+    <div id="stick-base"><div id="stick-knob"></div></div>
+  </div>
+  <div id="action-zone">
+    <button class="act-btn" id="btnA">A<span>乗降/殴る</span></button>
+    <button class="act-btn" id="btnB">B<span>ダッシュ</span></button>
+    <button class="act-btn" id="btnC">⏸<span></span></button>
+  </div>
+</div>
+
+<!-- メッセージトースト -->
+<div id="toast"></div>
+
+<!-- ポーズ -->
+<div id="pauseScreen" class="overlay hidden">
+  <div class="pause-inner">
+    <h2>一時停止</h2>
+    <div class="pause-stats" id="pauseStats"></div>
+    <button class="big-btn" id="resumeBtn">▶ 再開</button>
+    <button class="big-btn ghost" id="restartBtn">↺ 最初から</button>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
