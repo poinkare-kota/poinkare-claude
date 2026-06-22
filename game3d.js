@@ -332,10 +332,9 @@ const EYE = 26;
 const weapon = new THREE.Group();
 const gunMat = new THREE.MeshStandardMaterial({ color: 0x1b1e26, roughness: 0.35, metalness: 0.85, envMapIntensity: 1.0 });
 const handMat = new THREE.MeshStandardMaterial({ color: 0xe8b48c, roughness: 0.7 });
-weapon.add(
-  Object.assign(new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.8, 5.5), gunMat), { position: new THREE.Vector3(0, 0, -1) }),
-  Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 3), gunMat), { position: new THREE.Vector3(0, 0.4, -4) }),
-);
+const gunPart1 = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.8, 5.5), gunMat); gunPart1.position.set(0, 0, -1);
+const gunPart2 = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 3), gunMat); gunPart2.position.set(0, 0.4, -4);
+weapon.add(gunPart1, gunPart2);
 const grip = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.6, 1.6), gunMat); grip.position.set(0, -1.6, 0.6); grip.rotation.x = 0.25; weapon.add(grip);
 const hand = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.8, 2.2), handMat); hand.position.set(0, -1.4, 1.2); weapon.add(hand);
 const muzzle = new THREE.Mesh(new THREE.SphereGeometry(1.3, 6, 6), new THREE.MeshBasicMaterial({ color: 0xffd060, transparent: true, opacity: 0 }));
@@ -417,11 +416,11 @@ function makeCarProc(color, police) {
   }
   let bar = null;
   if (police) {
-    g.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(w + 0.4, 4, len * 0.7), new THREE.MeshStandardMaterial({ color: 0xf2f2f2, roughness: 0.4, metalness: 0.2 })), { position: new THREE.Vector3(0, 7, 0) }));
+    const lbBase = new THREE.Mesh(new THREE.BoxGeometry(w + 0.4, 4, len * 0.7), new THREE.MeshStandardMaterial({ color: 0xf2f2f2, roughness: 0.4, metalness: 0.2 })); lbBase.position.set(0, 7, 0); g.add(lbBase);
     bar = new THREE.Group();
-    bar.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(w * 0.4, 3, 5), new THREE.MeshStandardMaterial({ color: 0xff2020, emissive: 0xff2020, emissiveIntensity: 1.6 })), { position: new THREE.Vector3(-w * 0.22, 21.5, 0) }));
-    bar.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(w * 0.4, 3, 5), new THREE.MeshStandardMaterial({ color: 0x2040ff, emissive: 0x2040ff, emissiveIntensity: 1.6 })), { position: new THREE.Vector3(w * 0.22, 21.5, 0) }));
-    g.add(bar);
+    const rb = new THREE.Mesh(new THREE.BoxGeometry(w * 0.4, 3, 5), new THREE.MeshStandardMaterial({ color: 0xff2020, emissive: 0xff2020, emissiveIntensity: 1.6 })); rb.position.set(-w * 0.22, 21.5, 0);
+    const bb = new THREE.Mesh(new THREE.BoxGeometry(w * 0.4, 3, 5), new THREE.MeshStandardMaterial({ color: 0x2040ff, emissive: 0x2040ff, emissiveIntensity: 1.6 })); bb.position.set(w * 0.22, 21.5, 0);
+    bar.add(rb, bb); g.add(bar);
   }
   scene.add(g); return { g, bar, len, w };
 }
