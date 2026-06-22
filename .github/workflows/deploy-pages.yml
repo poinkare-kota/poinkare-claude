@@ -33,6 +33,9 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          # Pagesが未有効でもワークフロー側から有効化する（手動トグル不要）
+          enablement: true
 
       - name: Upload site (repo root)
         uses: actions/upload-pages-artifact@v3
