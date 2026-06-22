@@ -101,7 +101,7 @@
     s.classList.remove('hidden');
   }
   try {
-    await import('./game3d.js');
+    await import('./game3d.js?v=20260622b');
     const info = document.getElementById('loadInfo');
     if (info) info.innerHTML = 'iPhoneは横向き推奨 / 左で移動・右ドラッグで視点<br>準備完了！「ゲーム開始」をタップ';
   } catch (err) {
