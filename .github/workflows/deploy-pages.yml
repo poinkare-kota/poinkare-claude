@@ -1,0 +1,44 @@
+name: Deploy to GitHub Pages
+
+# 池袋ゲームをGitHub Pagesへ自動公開する。
+# 初回のみ: リポジトリの Settings → Pages → Build and deployment →
+#           Source を「GitHub Actions」に設定すれば、以降このワークフローが公開する。
+
+on:
+  push:
+    branches:
+      - main
+      - claude/ikebukuro-gta-game-xztxtb
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時実行は1つに絞る（公開の上書き競合を防ぐ）
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site (repo root)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
