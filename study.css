@@ -190,7 +190,7 @@ num{background:#2563eb; color:#fff; font-weight:800; padding:1px 7px; border-rad
 
 .qcard{background:linear-gradient(135deg,var(--card2),var(--card)); border-radius:var(--r); padding:20px 16px;
   box-shadow:0 8px 22px rgba(0,0,0,.3); min-height:150px; animation:slideIn .3s;}
-.qtext{font-size:18px; line-height:1.65; font-weight:700; margin:0 0 18px;}
+.qtext{font-size:18px; line-height:1.65; font-weight:700; margin:0 0 18px; white-space:pre-wrap; word-break:break-word;}
 .qarea{display:flex; flex-direction:column; gap:10px;}
 
 /* 選択肢 */
@@ -227,6 +227,7 @@ num{background:#2563eb; color:#fff; font-weight:800; padding:1px 7px; border-rad
 .fb-head.good{color:var(--good);} .fb-head.bad{color:var(--bad);}
 .fb-exp{font-size:14.5px; line-height:1.7; color:var(--ink); margin:0 0 16px; background:#1d1640; padding:12px 14px; border-radius:12px;}
 .fb-exp .ans{color:var(--gold); font-weight:800;}
+.fb-ref{display:inline-block; margin-top:8px; font-size:11px; color:var(--sub); background:#16112e; padding:2px 8px; border-radius:6px;}
 .fb-next{width:100%; border:0; border-radius:14px; padding:16px; font-size:17px; font-weight:800; color:#fff;
   background:linear-gradient(135deg,var(--accent2),var(--accent)); box-shadow:0 5px 0 rgba(0,0,0,.25);}
 .fb-next:active{transform:translateY(4px);}
