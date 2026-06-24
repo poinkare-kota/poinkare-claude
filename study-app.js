@@ -377,7 +377,8 @@
     if (q.type === "input") ans = `<span class="ans">答え：${q.answers[0]}</span><br>`;
     else if (q.type === "choice") ans = `<span class="ans">答え：${q.choices[q.answer]}</span><br>`;
     else ans = `<span class="ans">答え：${q.answer ? "◯" : "✕"}</span><br>`;
-    $("#fbExp").innerHTML = ans + q.explain;
+    const ref = q.ref ? `<span class="fb-ref">📖 ${q.ref}</span>` : "";
+    $("#fbExp").innerHTML = ans + q.explain + ref;
   }
   $("#fbNext").addEventListener("click", () => {
     SND.tap();
