@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1b1340">
+<title>内管マスター — 内部管理責任者 学習アプリ</title>
+<link rel="stylesheet" href="study.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ===== ホーム ===== -->
+  <section class="screen active" id="screen-home">
+    <div class="home-hero">
+      <div class="home-logo">📘</div>
+      <h1>内管マスター</h1>
+      <p class="home-sub">内部管理責任者 資格試験トレーナー</p>
+    </div>
+
+    <div class="lvcard" id="lvcard">
+      <div class="lv-row">
+        <span class="lv-badge" id="lvBadge">Lv.1</span>
+        <span class="lv-title" id="lvTitle">見習い</span>
+        <span class="lv-xp" id="lvXpText">0 / 100 XP</span>
+      </div>
+      <div class="xpbar"><div class="xpbar-fill" id="xpFill"></div></div>
+      <div class="lv-stats">
+        <div><b id="statStreak">0</b><span>連続正解記録</span></div>
+        <div><b id="statAcc">—</b><span>平均正答率</span></div>
+        <div><b id="statClear">0/6</b><span>単元クリア</span></div>
+      </div>
+    </div>
+
+    <div class="home-menu">
+      <button class="bigbtn b-learn" data-go="units">
+        <span class="bigbtn-ic">📖</span>
+        <span class="bigbtn-tx"><b>学習する</b><small>単元ごとに図解で覚える</small></span>
+      </button>
+      <button class="bigbtn b-test" data-go="testconf">
+        <span class="bigbtn-ic">✍️</span>
+        <span class="bigbtn-tx"><b>テストに挑戦</b><small>○×・4択・記述</small></span>
+      </button>
+      <button class="bigbtn b-review" data-go="review">
+        <span class="bigbtn-ic">🔁</span>
+        <span class="bigbtn-tx"><b>まちがい復習</b><small>苦手をやり直す（<span id="wrongCount">0</span>問）</small></span>
+      </button>
+    </div>
+
+    <div class="home-foot">
+      <button class="ghost" id="soundToggle">🔊 効果音 ON</button>
+      <a class="ghost" href="index.html">🎮 ゲームへ</a>
+      <button class="ghost danger" id="resetBtn">記録リセット</button>
+    </div>
+  </section>
+
+  <!-- ===== 単元選択（学習） ===== -->
+  <section class="screen" id="screen-units">
+    <header class="bar"><button class="back" data-go="home">‹</button><h2>学習する単元を選ぶ</h2></header>
+    <div class="unitgrid" id="unitGrid"></div>
+  </section>
+
+  <!-- ===== 学習ビュー ===== -->
+  <section class="screen" id="screen-learn">
+    <header class="bar">
+      <button class="back" data-go="units">‹</button>
+      <h2 id="learnTitle"></h2>
+    </header>
+    <div class="learn-progress"><div id="learnProgFill"></div></div>
+    <div class="learn-body" id="learnBody"></div>
+    <div class="learn-nav">
+      <button class="nav-prev" id="learnPrev">‹ 前</button>
+      <span id="learnDots" class="dots"></span>
+      <button class="nav-next" id="learnNext">次 ›</button>
+    </div>
+  </section>
+
+  <!-- ===== テスト設定 ===== -->
+  <section class="screen" id="screen-testconf">
+    <header class="bar"><button class="back" data-go="home">‹</button><h2>テスト設定</h2></header>
+    <div class="conf">
+      <p class="conf-label">出題範囲</p>
+      <div class="seg" id="confScope">
+        <button class="seg-btn active" data-scope="all">全範囲ランダム</button>
+        <button class="seg-btn" data-scope="unit">単元ごと</button>
+      </div>
+      <div id="confUnitWrap" class="conf-units hidden"></div>
+
+      <p class="conf-label">問題数</p>
+      <div class="seg" id="confCount">
+        <button class="seg-btn" data-count="5">5問</button>
+        <button class="seg-btn active" data-count="10">10問</button>
+        <button class="seg-btn" data-count="20">20問</button>
+      </div>
+
+      <button class="start-btn" id="startQuiz">スタート！</button>
+    </div>
+  </section>
+
+  <!-- ===== クイズ ===== -->
+  <section class="screen" id="screen-quiz">
+    <header class="bar quiz-bar">
+      <button class="back" id="quizQuit">✕</button>
+      <div class="q-progress"><div id="qProgFill"></div></div>
+      <span class="combo" id="comboTag">🔥0</span>
+    </header>
+
+    <div class="quiz-meta">
+      <span id="qIndex">1 / 10</span>
+      <span class="qtype" id="qTypeTag"></span>
+    </div>
+
+    <div class="qcard">
+      <p class="qtext" id="qText"></p>
+      <div class="qarea" id="qArea"></div>
+    </div>
+
+    <div class="feedback" id="feedback">
+      <div class="fb-head" id="fbHead"></div>
+      <p class="fb-exp" id="fbExp"></p>
+      <button class="fb-next" id="fbNext">次へ ›</button>
+    </div>
+  </section>
+
+  <!-- ===== 結果 ===== -->
+  <section class="screen" id="screen-result">
+    <div class="result-inner">
+      <div class="result-emoji" id="resEmoji">🎉</div>
+      <h2 id="resTitle">クリア！</h2>
+      <div class="result-score"><span id="resScore">0</span><small>/ <span id="resTotal">0</span> 正解</small></div>
+      <div class="result-xp" id="resXp">+0 XP</div>
+      <div class="result-bars">
+        <div class="rb"><span>正答率</span><b id="resAcc">0%</b></div>
+        <div class="rb"><span>最大コンボ</span><b id="resCombo">0</b></div>
+      </div>
+      <div class="result-btns">
+        <button class="start-btn" id="resRetry">もう一度</button>
+        <button class="ghost" data-go="home">ホームへ</button>
+      </div>
+    </div>
+  </section>
+
+  <canvas id="fxCanvas"></canvas>
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="study-data.js"></script>
+<script src="study-app.js"></script>
+</body>
+</html>
