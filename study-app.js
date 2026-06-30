@@ -129,6 +129,7 @@
   /* ---------------- 画面遷移 ---------------- */
   let current = "home";
   function go(name) {
+    if (name === "review") { ac(); startReview(); return; } // 専用画面を持たず直接クイズへ
     const cur = $(".screen.active"); const next = $("#screen-" + name);
     if (!next || cur === next) return;
     if (cur) cur.classList.remove("active");
@@ -137,7 +138,6 @@
     if (name === "home") renderHome();
     if (name === "units") renderUnits();
     if (name === "testconf") renderTestConf();
-    if (name === "review") startReview();
   }
   // データ属性のナビ
   document.addEventListener("click", (e) => {
@@ -431,11 +431,13 @@
 
   /* ---------------- 復習（苦手） ---------------- */
   function startReview() {
-    if (!save.wrong.length) { toast("苦手問題はありません🙆"); setTimeout(() => go("home"), 400); return; }
     const list = save.wrong.map((w) => {
-      const u = UNITS.find((x) => x.id === w.unitId); if (!u) return null;
+      const u = UNITS.find((x) => x.id === w.unitId); if (!u || !u.questions[w.qIndex]) return null;
       return { q: u.questions[w.qIndex], unitId: w.unitId, qIndex: w.qIndex };
     }).filter(Boolean);
+    // 旧データ等で無効になった項目を掃除
+    if (list.length !== save.wrong.length) { save.wrong = list.map((x) => ({ unitId: x.unitId, qIndex: x.qIndex })); persist(); renderHome(); }
+    if (!list.length) { toast("苦手問題はありません🙆"); return; }
     startQuiz(shuffle(list), "まちがい復習");
   }
 
